@@ -35,7 +35,7 @@ func main() {
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Instance Name", "Private IP", "Public IP"})
+	table.SetHeader([]string{"Instance Name", "State", "Private IP", "Public IP"})
 	table.SetAutoWrapText(false)
 	table.SetAutoFormatHeaders(true)
 	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
@@ -61,7 +61,7 @@ func main() {
 			}
 
 			if instanceName != "Undefined" {
-				data = append(data, []string{instanceName, aws.StringValue(i.PrivateIpAddress), aws.StringValue(i.PublicIpAddress)})
+				data = append(data, []string{instanceName, aws.StringValue(i.State.Name), aws.StringValue(i.PrivateIpAddress), aws.StringValue(i.PublicIpAddress)})
 			}
 		}
 	}
@@ -72,6 +72,4 @@ func main() {
 
 	table.AppendBulk(data)
 	table.Render()
-
-	//fmt.Println(result)
 }
