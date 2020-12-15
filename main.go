@@ -14,8 +14,14 @@ import (
 )
 
 func main() {
+	val, ok := os.LookupEnv("AWS_REGION")
+	region := "us-east-1"
+	if ok {
+		region = val
+	}
+
 	svc := ec2.New(session.New(&aws.Config{
-		Region: aws.String("us-east-1"),
+		Region: aws.String(region),
 	}))
 	input := &ec2.DescribeInstancesInput{}
 
